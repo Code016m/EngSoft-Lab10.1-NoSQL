@@ -5,15 +5,20 @@ def obter_livros(termo=None):
         return repository.buscar_livros(termo)
     return repository.listar_livros()
 
-
 def adicionar_livro(titulo, autor, genero, ano):
-    if not titulo or not autor or not genero or not ano:
+    if not titulo.strip() or not autor.strip() or not genero.strip() or not ano:
         raise ValueError("Preencha todos os campos.")
+    try:
+        ano = int(ano)
+        if ano <= 0:
+            raise ValueError
+    except ValueError:
+        raise ValueError("Informe um ano válido.")
     livro = {
         "titulo": titulo.strip(),
         "autor": autor.strip(),
         "genero": genero.strip(),
-        "ano": int(ano)
+        "ano": ano
     }
     return repository.cadastrar_livro(livro)
 

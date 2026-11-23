@@ -21,6 +21,7 @@ def get_collection():
             "&retrywrites=false&maxIdleTimeMS=120000"
         )
         _client = MongoClient(uri, serverSelectionTimeoutMS=10000)
+        _client.admin.command("ping")
     database = _client[os.getenv("COSMOS_DATABASE", "livraria")]
     return database[os.getenv("COSMOS_COLLECTION", "livros")]
 
